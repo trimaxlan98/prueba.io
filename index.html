@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso a la Cámara</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        button {
+            font-size: 1em;
+            padding: 10px 20px;
+            margin: 20px 0;
+        }
+        #videoElement {
+            width: 100%;
+            max-width: 640px;
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Acceso a la Cámara</h1>
+    <button id="startButton">Iniciar Cámara</button>
+    <video id="videoElement" autoplay playsinline></video>
 
+    <script>
+        const startButton = document.getElementById('startButton');
+        const videoElement = document.getElementById('videoElement');
+
+        startButton.addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+                videoElement.srcObject = stream;
+            } catch (error) {
+                console.error('Error al acceder a la cámara:', error);
+                alert('No se pudo acceder a la cámara. Asegúrate de dar permiso y de que tu dispositivo tenga una cámara frontal.');
+            }
+        });
+    </script>
+</body>
+</html>
